@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface Question {
   id: number;
@@ -53,6 +55,8 @@ export const OnboardingQuiz = ({ onComplete }: { onComplete: () => void }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, any>>({});
   const [scaleValue, setScaleValue] = useState(5);
+  const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+  const { toast } = useToast();
 
   const handleAnswer = (answer: any) => {
     setAnswers(prev => ({
@@ -61,13 +65,50 @@ export const OnboardingQuiz = ({ onComplete }: { onComplete: () => void }) => {
     }));
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
     } else {
-      // Complete onboarding
-      console.log("Onboarding answers:", answers);
-      onComplete();
+      // Complete onboarding - create anonymous account
+      setIsCreatingAccount(true);
+      try {
+        const { data, error } = await supabase.auth.signInAnonymously();
+        
+        if (error) {
+          toast({
+            title: "Error creating account",
+            description: error.message,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        // Store onboarding answers in user metadata
+        if (data.user) {
+          await supabase.auth.updateUser({
+            data: {
+              onboarding_answers: answers,
+              onboarding_completed: true
+            }
+          });
+        }
+
+        toast({
+          title: "Welcome to your recovery journey!",
+          description: "Your progress will now be saved.",
+        });
+
+        onComplete();
+      } catch (error) {
+        console.error("Onboarding completion error:", error);
+        toast({
+          title: "Error",
+          description: "Something went wrong. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsCreatingAccount(false);
+      }
     }
   };
 
@@ -163,12 +204,17 @@ export const OnboardingQuiz = ({ onComplete }: { onComplete: () => void }) => {
 
           <Button
             onClick={handleNext}
-            disabled={!answers[question.id] && question.type !== "text"}
+            disabled={(!answers[question.id] && question.type !== "text") || isCreatingAccount}
             className="flex items-center gap-2"
             variant="hero"
           >
-            {currentQuestion === questions.length - 1 ? "Complete" : "Next"}
-            <ArrowRight className="h-4 w-4" />
+            {isCreatingAccount 
+              ? "Creating your account..." 
+              : currentQuestion === questions.length - 1 
+                ? "Complete Journey" 
+                : "Next"
+            }
+            {!isCreatingAccount && <ArrowRight className="h-4 w-4" />}
           </Button>
         </div>
       </Card>
