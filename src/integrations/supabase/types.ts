@@ -14,13 +14,182 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      achievements: {
+        Row: {
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          name: string
+          unlock_criteria: Json
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          icon: string
+          id?: string
+          name: string
+          unlock_criteria: Json
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          name?: string
+          unlock_criteria?: Json
+        }
+        Relationships: []
+      }
+      daily_progress: {
+        Row: {
+          completed_tasks: number | null
+          created_at: string
+          date: string
+          id: string
+          is_clean_day: boolean | null
+          mood_rating: number | null
+          notes: string | null
+          total_tasks: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_tasks?: number | null
+          created_at?: string
+          date?: string
+          id?: string
+          is_clean_day?: boolean | null
+          mood_rating?: number | null
+          notes?: string | null
+          total_tasks?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_tasks?: number | null
+          created_at?: string
+          date?: string
+          id?: string
+          is_clean_day?: boolean | null
+          mood_rating?: number | null
+          notes?: string | null
+          total_tasks?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      daily_tasks: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_completed: boolean | null
+          task_date: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_completed?: boolean | null
+          task_date?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_completed?: boolean | null
+          task_date?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+          longest_streak: number | null
+          streak_start_date: string | null
+          total_streak_days: number | null
+          tree_growth_percentage: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          longest_streak?: number | null
+          streak_start_date?: string | null
+          total_streak_days?: number | null
+          tree_growth_percentage?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          longest_streak?: number | null
+          streak_start_date?: string | null
+          total_streak_days?: number | null
+          tree_growth_percentage?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_achievements: {
+        Row: {
+          achievement_id: string
+          id: string
+          unlocked_at: string
+          user_id: string
+        }
+        Insert: {
+          achievement_id: string
+          id?: string
+          unlocked_at?: string
+          user_id: string
+        }
+        Update: {
+          achievement_id?: string
+          id?: string
+          unlocked_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_achievement_id_fkey"
+            columns: ["achievement_id"]
+            isOneToOne: false
+            referencedRelation: "achievements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_user_streak: {
+        Args: { user_uuid: string }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
