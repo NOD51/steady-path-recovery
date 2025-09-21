@@ -69,33 +69,16 @@ export const OnboardingQuiz = ({ onComplete }: { onComplete: () => void }) => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
     } else {
-      // Complete onboarding - create anonymous account
+      // Complete onboarding - store answers locally for now
       setIsCreatingAccount(true);
       try {
-        const { data, error } = await supabase.auth.signInAnonymously();
-        
-        if (error) {
-          toast({
-            title: "Error creating account",
-            description: error.message,
-            variant: "destructive",
-          });
-          return;
-        }
-
-        // Store onboarding answers in user metadata
-        if (data.user) {
-          await supabase.auth.updateUser({
-            data: {
-              onboarding_answers: answers,
-              onboarding_completed: true
-            }
-          });
-        }
+        // Store onboarding answers in localStorage
+        localStorage.setItem('onboarding_answers', JSON.stringify(answers));
+        localStorage.setItem('onboarding_completed', 'true');
 
         toast({
           title: "Welcome to your recovery journey!",
-          description: "Your progress will now be saved.",
+          description: "Let's start building your progress.",
         });
 
         onComplete();
