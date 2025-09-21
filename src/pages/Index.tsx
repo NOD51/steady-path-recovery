@@ -12,27 +12,19 @@ const Index = () => {
   const { user, loading: authLoading } = useAuth();
   const [currentState, setCurrentState] = useState<AppState>("landing");
 
-  // Update state based on authentication
+  // Initialize app state based on onboarding status (no auth gating)
   useEffect(() => {
-    if (!authLoading) {
-      if (user && currentState === "landing") {
-        setCurrentState("dashboard");
-      } else if (!user && (currentState === "dashboard" || currentState === "urge-toolkit" || currentState === "relapse-recovery")) {
-        setCurrentState("landing");
-      }
-    }
-  }, [user, authLoading, currentState]);
+    const completed = localStorage.getItem('onboarding_completed') === 'true';
+    setCurrentState(completed ? 'dashboard' : 'landing');
+  }, []);
 
   const handleStartJourney = () => {
     setCurrentState("onboarding");
   };
 
   const handleOnboardingComplete = () => {
-    if (user) {
-      setCurrentState("dashboard");
-    } else {
-      setCurrentState("landing");
-    }
+    localStorage.setItem('onboarding_completed', 'true');
+    setCurrentState("dashboard");
   };
 
   const handleUrgeToolkit = () => {
@@ -68,11 +60,11 @@ const Index = () => {
     case "onboarding":
       return <OnboardingQuiz onComplete={handleOnboardingComplete} />;
     case "dashboard":
-      return user ? <Dashboard onUrgeToolkit={handleUrgeToolkit} onRelapseRecovery={handleRelapseRecovery} /> : <LandingPage onStartJourney={handleStartJourney} />;
+      return <Dashboard onUrgeToolkit={handleUrgeToolkit} onRelapseRecovery={handleRelapseRecovery} />;
     case "urge-toolkit":
-      return user ? <UrgeToolkit onBack={handleBackToDashboard} /> : <LandingPage onStartJourney={handleStartJourney} />;
+      return <UrgeToolkit onBack={handleBackToDashboard} />;
     case "relapse-recovery":
-      return user ? <RelapseRecovery onBack={handleBackToDashboard} /> : <LandingPage onStartJourney={handleStartJourney} />;
+      return <RelapseRecovery onBack={handleBackToDashboard} />;
     default:
       return <LandingPage onStartJourney={handleStartJourney} />;
   }
