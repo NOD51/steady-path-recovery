@@ -17,7 +17,7 @@ import {
   Circle,
   Trophy
 } from "lucide-react";
-import { useProgress } from "@/hooks/useProgress";
+import { useGuestProgress } from "@/hooks/useGuestProgress";
 
 export const Dashboard = ({ onUrgeToolkit, onRelapseRecovery }: { onUrgeToolkit: () => void; onRelapseRecovery?: () => void }) => {
   const { 
@@ -28,7 +28,7 @@ export const Dashboard = ({ onUrgeToolkit, onRelapseRecovery }: { onUrgeToolkit:
     loading,
     completeTask,
     markCleanDay 
-  } = useProgress();
+  } = useGuestProgress();
 
   if (loading) {
     return (
