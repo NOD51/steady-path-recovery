@@ -11,6 +11,10 @@ import {
   Phone,
   Zap
 } from "lucide-react";
+import { Timer } from "./Timer";
+import { DistractionGame } from "./DistractionGame";
+import { CrisisSupport } from "./CrisisSupport";
+import { MessageBuddy } from "./MessageBuddy";
 
 const BreathingExercise = ({ onComplete }: { onComplete: () => void }) => {
   const [phase, setPhase] = useState<'inhale' | 'hold' | 'exhale'>('inhale');
@@ -184,6 +188,78 @@ export const UrgeToolkit = ({ onBack }: { onBack: () => void }) => {
     );
   }
 
+  if (currentTool === 'timer') {
+    return (
+      <div className="min-h-screen bg-gradient-background flex items-center justify-center p-4">
+        <Card className="w-full max-w-lg p-8 shadow-medium">
+          <Button
+            variant="ghost"
+            onClick={() => setCurrentTool(null)}
+            className="mb-6 -ml-2"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Tools
+          </Button>
+          <Timer onComplete={handleToolComplete} />
+        </Card>
+      </div>
+    );
+  }
+
+  if (currentTool === 'game') {
+    return (
+      <div className="min-h-screen bg-gradient-background flex items-center justify-center p-4">
+        <Card className="w-full max-w-lg p-8 shadow-medium">
+          <Button
+            variant="ghost"
+            onClick={() => setCurrentTool(null)}
+            className="mb-6 -ml-2"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Tools
+          </Button>
+          <DistractionGame onComplete={handleToolComplete} />
+        </Card>
+      </div>
+    );
+  }
+
+  if (currentTool === 'crisis') {
+    return (
+      <div className="min-h-screen bg-gradient-background flex items-center justify-center p-4">
+        <Card className="w-full max-w-2xl p-8 shadow-medium">
+          <Button
+            variant="ghost"
+            onClick={() => setCurrentTool(null)}
+            className="mb-6 -ml-2"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Tools
+          </Button>
+          <CrisisSupport onComplete={handleToolComplete} />
+        </Card>
+      </div>
+    );
+  }
+
+  if (currentTool === 'buddy') {
+    return (
+      <div className="min-h-screen bg-gradient-background flex items-center justify-center p-4">
+        <Card className="w-full max-w-2xl p-8 shadow-medium">
+          <Button
+            variant="ghost"
+            onClick={() => setCurrentTool(null)}
+            className="mb-6 -ml-2"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Tools
+          </Button>
+          <MessageBuddy onComplete={handleToolComplete} />
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-background p-4">
       <div className="container mx-auto max-w-4xl">
@@ -268,6 +344,7 @@ export const UrgeToolkit = ({ onBack }: { onBack: () => void }) => {
                   variant="outline"
                   size="lg"
                   className="w-full justify-start"
+                  onClick={() => setCurrentTool('timer')}
                 >
                   <Clock className="h-5 w-5 mr-3" />
                   10 Minute Timer
@@ -277,6 +354,7 @@ export const UrgeToolkit = ({ onBack }: { onBack: () => void }) => {
                   variant="outline"
                   size="lg"
                   className="w-full justify-start"
+                  onClick={() => setCurrentTool('game')}
                 >
                   <Zap className="h-5 w-5 mr-3" />
                   Distraction Game
@@ -305,6 +383,7 @@ export const UrgeToolkit = ({ onBack }: { onBack: () => void }) => {
                   variant="outline"
                   size="lg"
                   className="w-full justify-start"
+                  onClick={() => setCurrentTool('buddy')}
                 >
                   <Users className="h-5 w-5 mr-3" />
                   Message Buddy
@@ -314,6 +393,7 @@ export const UrgeToolkit = ({ onBack }: { onBack: () => void }) => {
                   variant="outline"
                   size="lg"
                   className="w-full justify-start"
+                  onClick={() => setCurrentTool('crisis')}
                 >
                   <Phone className="h-5 w-5 mr-3" />
                   Crisis Support

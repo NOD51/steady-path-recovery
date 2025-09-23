@@ -108,17 +108,77 @@ export const Dashboard = ({ onUrgeToolkit, onRelapseRecovery }: { onUrgeToolkit:
               Need Help Now
             </Button>
 
-            <Button variant="outline" size="lg" className="w-full justify-start">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="w-full justify-start"
+              onClick={() => {
+                const toolkit = document.createElement('div');
+                toolkit.style.position = 'fixed';
+                toolkit.style.top = '0';
+                toolkit.style.left = '0';
+                toolkit.style.right = '0';
+                toolkit.style.bottom = '0';
+                toolkit.style.zIndex = '9999';
+                toolkit.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                toolkit.style.display = 'flex';
+                toolkit.style.alignItems = 'center';
+                toolkit.style.justifyContent = 'center';
+                toolkit.innerHTML = '<div style="color: white; text-align: center;">Quick Journal feature - Click outside to close</div>';
+                toolkit.onclick = () => document.body.removeChild(toolkit);
+                document.body.appendChild(toolkit);
+              }}
+            >
               <BookOpen className="h-5 w-5 mr-3" />
               Quick Journal
             </Button>
 
-            <Button variant="outline" size="lg" className="w-full justify-start">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="w-full justify-start"
+              onClick={() => {
+                const breathing = document.createElement('div');
+                breathing.style.position = 'fixed';
+                breathing.style.top = '0';
+                breathing.style.left = '0';
+                breathing.style.right = '0';
+                breathing.style.bottom = '0';
+                breathing.style.zIndex = '9999';
+                breathing.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                breathing.style.display = 'flex';
+                breathing.style.alignItems = 'center';
+                breathing.style.justifyContent = 'center';
+                breathing.innerHTML = '<div style="color: white; text-align: center;">Breathing Exercise feature - Click outside to close</div>';
+                breathing.onclick = () => document.body.removeChild(breathing);
+                document.body.appendChild(breathing);
+              }}
+            >
               <Heart className="h-5 w-5 mr-3" />
               Breathing Exercise
             </Button>
 
-            <Button variant="outline" size="lg" className="w-full justify-start">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="w-full justify-start"
+              onClick={() => {
+                const buddy = document.createElement('div');
+                buddy.style.position = 'fixed';
+                buddy.style.top = '0';
+                buddy.style.left = '0';
+                buddy.style.right = '0';
+                buddy.style.bottom = '0';
+                buddy.style.zIndex = '9999';
+                buddy.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                buddy.style.display = 'flex';
+                buddy.style.alignItems = 'center';
+                buddy.style.justifyContent = 'center';
+                buddy.innerHTML = '<div style="color: white; text-align: center;">Connect with Buddy feature - Click outside to close</div>';
+                buddy.onclick = () => document.body.removeChild(buddy);
+                document.body.appendChild(buddy);
+              }}
+            >
               <Users className="h-5 w-5 mr-3" />
               Connect with Buddy
             </Button>
