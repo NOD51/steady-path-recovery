@@ -36,10 +36,10 @@ jobs:
     - name: Build web app
       run: npm run build
       
-    - name: Add Android platform (if missing)
+    - name: Add Android platform (if missing, skip validation)
       run: |
         if [ ! -d "android" ]; then
-          npx cap add android
+          npx cap add android --skip-appid-validation
         fi
       
     - name: Sync Capacitor
