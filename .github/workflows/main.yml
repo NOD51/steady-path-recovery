@@ -36,10 +36,9 @@ jobs:
     - name: Build web app
       run: npm run build
 
-    - name: Init Capacitor (only if android not added)
+    - name: Ensure Android platform exists
       run: |
         if [ ! -d "android" ]; then
-          npx cap init myapp com.lovable.myapp --web-dir=dist
           npx cap add android
         fi
 
