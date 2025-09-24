@@ -24,7 +24,7 @@ jobs:
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
-        distribution: 'temurin'   # modern JDK distribution
+        distribution: 'temurin'
         java-version: '17'
         
     - name: Setup Android SDK
@@ -36,10 +36,11 @@ jobs:
     - name: Build web app
       run: npm run build
       
-    - name: Add Android platform (if missing, skip validation)
+    - name: Add Android platform (if missing, force init with safe App ID)
       run: |
         if [ ! -d "android" ]; then
-          npx cap add android --skip-appid-validation
+          npx cap init myapp com.lovable.myapp --web-dir=dist
+          npx cap add android
         fi
       
     - name: Sync Capacitor
