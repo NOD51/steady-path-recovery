@@ -18,13 +18,13 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
         
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
-        distribution: 'adopt'
+        distribution: 'temurin'
         java-version: '17'
         
     - name: Setup Android SDK
@@ -35,9 +35,6 @@ jobs:
       
     - name: Build web app
       run: npm run build
-      
-    - name: Add Android platform
-      run: npx cap add android
       
     - name: Sync Capacitor
       run: npx cap sync android
