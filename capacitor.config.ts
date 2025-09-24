@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.94c2be83a88049459742700bf2884dfb',
+  appId: 'app.lovable.recovery',
   appName: 'steady-path-recovery',
   webDir: 'dist',
   server: {
