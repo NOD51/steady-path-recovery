@@ -1,0 +1,129 @@
+{
+  "dailyEngagementFeatures": {
+    "accountabilityAndSocial": [
+      {
+        "name": "Daily Check-ins",
+        "description": "Morning/evening check-ins asking 'How are you feeling?' with mood tracking",
+        "hook": "Builds routine and shows progress"
+      },
+      {
+        "name": "Accountability Partners",
+        "description": "Match users with partners who check in on each other",
+        "hook": "Social commitment increases consistency"
+      },
+      {
+        "name": "Community Feed",
+        "description": "Anonymous success stories and milestone celebrations",
+        "hook": "Inspiration and belonging"
+      },
+      {
+        "name": "Group Challenges",
+        "description": "Weekly community challenges (e.g., '7 days urge-free')",
+        "hook": "Collective motivation"
+      }
+    ],
+    "gamification": [
+      {
+        "name": "Daily Streaks",
+        "description": "Consecutive days clean with visual streak counter",
+        "hook": "Don't break the chain psychology"
+      },
+      {
+        "name": "Daily Rewards",
+        "description": "Login rewards, unlock new tools/themes/badges",
+        "hook": "Immediate gratification replacement"
+      },
+      {
+        "name": "Progress Tree/Garden",
+        "description": "Visual metaphor that grows with each clean day",
+        "hook": "Nurturing something beautiful"
+      },
+      {
+        "name": "Achievement Showcase",
+        "description": "Unlockable badges displayed in profile",
+        "hook": "Pride and accomplishment"
+      }
+    ],
+    "contentAndLearning": [
+      {
+        "name": "Daily Motivational Quote",
+        "description": "Personalized inspirational message each day",
+        "hook": "Positive morning ritual"
+      },
+      {
+        "name": "Micro-Learning",
+        "description": "Daily 2-minute lesson about addiction, recovery, neuroscience",
+        "hook": "Understanding empowers change"
+      },
+      {
+        "name": "Gratitude Journal",
+        "description": "Daily prompt to write 3 things you're grateful for",
+        "hook": "Rewires brain for positivity"
+      },
+      {
+        "name": "Daily Reflection",
+        "description": "Evening journaling prompts about the day",
+        "hook": "Self-awareness and processing"
+      }
+    ],
+    "notificationsAndReminders": [
+      {
+        "name": "Smart Urge Predictions",
+        "description": "AI learns your patterns and sends preventive notifications before typical urge times",
+        "hook": "Feels personally supportive"
+      },
+      {
+        "name": "Daily Affirmations",
+        "description": "Personalized push notifications with affirmations",
+        "hook": "Consistent positive reinforcement"
+      },
+      {
+        "name": "Buddy Check-in Reminders",
+        "description": "Nudge to message accountability partner",
+        "hook": "Maintains social connections"
+      }
+    ],
+    "dataAndInsights": [
+      {
+        "name": "Weekly Report Card",
+        "description": "Sunday summary of progress, patterns, wins",
+        "hook": "Reflection and planning"
+      },
+      {
+        "name": "Mood Tracker",
+        "description": "Quick daily mood check with trend visualization",
+        "hook": "See emotional progress over time"
+      },
+      {
+        "name": "Money/Time Saved Counter",
+        "description": "Real-time calculation of resources recovered",
+        "hook": "Tangible evidence of change"
+      },
+      {
+        "name": "Trigger Pattern Analysis",
+        "description": "AI identifies your most common triggers and suggests coping strategies",
+        "hook": "Personalized insights feel valuable"
+      }
+    ]
+  },
+  "implementation": {
+    "quickWins": [
+      "Daily Check-ins",
+      "Daily Streaks",
+      "Daily Motivational Quote",
+      "Mood Tracker"
+    ],
+    "mediumEffort": [
+      "Gratitude Journal",
+      "Weekly Report Card",
+      "Daily Rewards System",
+      "Progress Tree Visual"
+    ],
+    "longerTerm": [
+      "Accountability Partners Matching",
+      "Community Feed",
+      "Smart Urge Predictions",
+      "Group Challenges"
+    ]
+  }
+}
