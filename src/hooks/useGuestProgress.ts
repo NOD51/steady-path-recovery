@@ -42,6 +42,13 @@ export interface UserAchievement {
   achievement: Achievement;
 }
 
+export interface CheckIn {
+  mood: string;
+  notes: string;
+  timestamp: string;
+  timeOfDay: "morning" | "evening";
+}
+
 export interface DailyProgress {
   id: string;
   user_id: string;
@@ -51,6 +58,7 @@ export interface DailyProgress {
   notes?: string;
   completed_tasks: number;
   total_tasks: number;
+  checkIns?: CheckIn[];
   created_at: string;
   updated_at: string;
 }
@@ -369,6 +377,44 @@ export const useGuestProgress = () => {
     return newStreak;
   };
 
+  const addCheckIn = (mood: string, notes: string, timeOfDay: "morning" | "evening") => {
+    try {
+      if (!todayProgress) return;
+
+      const today = new Date().toISOString().split('T')[0];
+      const checkIn: CheckIn = {
+        mood,
+        notes,
+        timestamp: new Date().toISOString(),
+        timeOfDay
+      };
+
+      const existingCheckIns = todayProgress.checkIns || [];
+      const updatedCheckIns = [...existingCheckIns, checkIn];
+
+      const updatedProgress = {
+        ...todayProgress,
+        checkIns: updatedCheckIns,
+        updated_at: new Date().toISOString(),
+      };
+
+      setTodayProgress(updatedProgress);
+      localStorage.setItem(`guest_progress_${today}`, JSON.stringify(updatedProgress));
+
+      toast({
+        title: "Check-in Recorded!",
+        description: "Keep up the great work tracking your progress.",
+      });
+    } catch (error) {
+      console.error('Error adding check-in:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save check-in",
+        variant: "destructive",
+      });
+    }
+  };
+
   const markCleanDay = (isClean: boolean = true) => {
     try {
       if (!todayProgress) return;
@@ -420,6 +466,7 @@ export const useGuestProgress = () => {
     completeTask,
     updateStreak,
     markCleanDay,
+    addCheckIn,
     initializeUserData,
   };
 };

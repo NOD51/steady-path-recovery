@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { DailyCheckIn } from "./DailyCheckIn";
 import { 
   TreePine, 
   Flame, 
@@ -27,8 +29,25 @@ export const Dashboard = ({ onUrgeToolkit, onRelapseRecovery }: { onUrgeToolkit:
     todayProgress,
     loading,
     completeTask,
-    markCleanDay 
+    markCleanDay,
+    addCheckIn
   } = useGuestProgress();
+
+  const [showCheckIn, setShowCheckIn] = useState(false);
+  
+  // Determine time of day for check-in
+  const currentHour = new Date().getHours();
+  const timeOfDay: "morning" | "evening" = currentHour < 12 ? "morning" : "evening";
+  
+  // Check if user has already done check-in for this time of day
+  const hasCheckedInToday = todayProgress?.checkIns?.some(
+    checkIn => checkIn.timeOfDay === timeOfDay
+  ) || false;
+
+  const handleCheckInComplete = (mood: string, notes: string) => {
+    addCheckIn(mood, notes, timeOfDay);
+    setShowCheckIn(false);
+  };
 
   if (loading) {
     return (
@@ -57,6 +76,28 @@ export const Dashboard = ({ onUrgeToolkit, onRelapseRecovery }: { onUrgeToolkit:
             You're doing great. Here's your progress today.
           </p>
         </div>
+
+        {/* Daily Check-In Prompt */}
+        {!hasCheckedInToday && (
+          <Card className="p-4 mb-6 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Heart className="h-5 w-5 text-primary" />
+                <div>
+                  <p className="font-medium">
+                    {timeOfDay === "morning" ? "Morning Check-In" : "Evening Check-In"}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Take a moment to reflect on how you're feeling
+                  </p>
+                </div>
+              </div>
+              <Button onClick={() => setShowCheckIn(true)} variant="default">
+                Check In
+              </Button>
+            </div>
+          </Card>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Life Tree Visualization */}
@@ -319,6 +360,13 @@ export const Dashboard = ({ onUrgeToolkit, onRelapseRecovery }: { onUrgeToolkit:
           </div>
         </Card>
       </div>
+
+      {/* Daily Check-In Dialog */}
+      <Dialog open={showCheckIn} onOpenChange={setShowCheckIn}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DailyCheckIn onComplete={handleCheckInComplete} timeOfDay={timeOfDay} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
